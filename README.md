@@ -1,1 +1,2 @@
 # normative-rl-benchmarks
+So far, this repository only contains a modified version of the UC Berkely AI Pacman environment which includes monitors for certain databases of norms ("norm bases"); these are described in the file `documentation.pdf`. Runs of the environment can be initiated as usual, with the addition of the flag `--monitor <MonitorName>`, along with the addition of `--rec <FileName>` to record resuts in a csv file.
