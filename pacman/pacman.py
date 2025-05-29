@@ -577,6 +577,7 @@ def readCommand( argv ):
     if options.fixRandomSeed: random.seed(4)
 
     # Choose a layout
+    print(options.layout)
     args['layout'] = layout.getLayout( options.layout )
     if args['layout'] == None: raise Exception("The layout " + options.layout + " cannot be found")
 
@@ -640,7 +641,7 @@ def loadAgent(pacman, nographics):
     #else:
     #    pythonPathDirs = pythonPathStr.split(';')
     #pythonPathDirs.append('.')
-    files = [f for f in os.listdir('./pacman') if f.endswith('gents.py')]
+    files = [f for f in os.listdir(os.path.join(os.path.dirname(__file__))) if f.endswith('gents.py')]
     for modulename in files:
         try:
             module = __import__(modulename[:-3])
@@ -691,8 +692,11 @@ def runGames( layout, pacman, ghosts, display, numGames, record, numTraining = 0
 
     rules = ClassicGameRules(timeout)
     games = []
-    temp = util.lookup(monitor, globals())()
-    fields = list(temp.export().keys())
+    if monitor is not None:
+        temp = util.lookup(monitor, globals())()
+        fields = list(temp.export().keys())
+    else:
+        fields = []
     fields.append("Win/Lose")
     fields.append("Score")
     entries = []
@@ -708,7 +712,10 @@ def runGames( layout, pacman, ghosts, display, numGames, record, numTraining = 0
         else:
             gameDisplay = display
             rules.quiet = False
-        monitorObj = util.lookup(monitor, globals())()
+        if monitor is not None:
+            monitorObj = util.lookup(monitor, globals())()
+        else:
+            monitorObj = monitor
         game = rules.newGame( layout, pacman, ghosts, gameDisplay, beQuiet, catchExceptions, beQuiet, monitorObj)
         game.run()
         if not beQuiet:

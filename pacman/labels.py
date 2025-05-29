@@ -1,5 +1,6 @@
 import game
 
+LABELS = ['eatBlueGhost', 'eatOrangeGhost', 'eatPowerPellet', 'lose', 'stayStill', 'score0', 'scoreGreater200', 'scoreGreater500', 'westSide']
 
 def eatBlueGhost(state, action):
     return state.killedBlue
@@ -40,3 +41,10 @@ def scoreGreater500(state, action):
 
 def westSide(state, action):
     return state.data.layout.width/2 > state.getPacmanPosition()[0]
+
+def getLabels(state, action):
+    labels = [action]
+    for l in LABELS:
+        if globals()[l](state, action):
+            labels.append(l)
+    return labels

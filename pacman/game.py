@@ -701,6 +701,7 @@ class Game:
             #Check for violations with monitor
             if self.monitor is not None and not self.train and agentIndex == 0:
                 self.monitor.detectViolation(observation, action)
+
             if agentIndex == 0:
                 self.state.killedBlue = False
                 self.state.killedOrange = False

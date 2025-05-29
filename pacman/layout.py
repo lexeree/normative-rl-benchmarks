@@ -130,10 +130,10 @@ class Layout:
             self.numGhosts += 1
 def getLayout(name, back = 3):
     if name.endswith('.lay'):
-        layout = tryToLoad(os.path.abspath(os.path.join('pacman', 'layouts', name)))
+        layout = tryToLoad(os.path.abspath(os.path.join(os.path.dirname(__file__), 'layouts', name+'.lay')))
         if layout == None: layout = tryToLoad(name)
     else:
-        layout = tryToLoad(os.path.abspath(os.path.join('pacman', 'layouts', name+'.lay')))
+        layout = tryToLoad(os.path.abspath(os.path.join(os.path.dirname(__file__), 'layouts', name+'.lay')))
         if layout == None: 
             layout = tryToLoad(name + '.lay')
     if layout == None and back >= 0:
